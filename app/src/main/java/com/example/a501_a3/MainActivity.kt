@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.example.a501_a3.ui.theme._501_A3Theme
 
 class MainActivity : ComponentActivity() {
@@ -82,6 +83,14 @@ fun ProfilePictureWithBadge(
     badgeCount: Int,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    val hasImage = remember {
+        try {
+            context.resources.getDrawable(R.drawable.user, context.theme) != null
+        } catch (e: Exception) {
+            false
+        }
+    }
     Box(
         modifier = modifier.size(120.dp),
         contentAlignment = Alignment.Center
@@ -98,19 +107,22 @@ fun ProfilePictureWithBadge(
                 ),
             contentAlignment = Alignment.Center
         ) {
-             Image(
-                 painter = painterResource(id = R.drawable.user),
-                 contentDescription = "Profile Picture",
-                 modifier = Modifier.fillMaxSize(),
-                 contentScale = ContentScale.Crop
-             )
-
-//            Text(
-//                text = "YY",
-//                fontSize = 40.sp,
-//                fontWeight = FontWeight.Bold,
-//                color = MaterialTheme.colorScheme.onPrimaryContainer
-//            )
+            if (hasImage) {
+                Image(
+                    painter = painterResource(id = R.drawable.user),
+                    contentDescription = "Profile Picture",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            } else
+            {
+                Text(
+                    text = "YY",
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
         }
 
         // Notification Badge
