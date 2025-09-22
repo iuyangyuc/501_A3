@@ -86,7 +86,6 @@ fun ProfilePictureWithBadge(
         modifier = modifier.size(120.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Profile Picture (using a placeholder)
         Box(
             modifier = Modifier
                 .size(120.dp)
